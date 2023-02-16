@@ -55,6 +55,14 @@ export const TextPorcentage = styled.Text`
     text-align: center;
 `;
 
+export const TextIcon = styled.Text`
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    right: 8px;
+    top: 8px;
+`;
+
 export const ViewContains = styled.View`
     display: flex;
     flex-direction: column;
@@ -77,4 +85,73 @@ export const TextContains = styled.Text`
     display: flex;
     align-items: center;
     color: #1B1D1E;
+`;
+
+export const ViewItem = styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 16px 14px 12px;
+    gap: 12px;
+
+    width: 307px;
+    height: 49px;
+
+    border: 1px solid #DDDEDF;
+    border-radius: 6px;
+    margin-bottom: 10px;
+`;
+
+export const TextHour = styled.Text`
+    width: 32px;
+    height: 16px;
+
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+
+    display: flex;
+    align-items: center;
+
+    color: #1B1D1E;
+`;
+
+export const TextTitle = styled.Text`
+    width: 84px;
+    height: 23px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+
+    display: flex;
+    align-items: center;
+
+    color: #1B1D1E;
+`;
+
+export const TextName = styled.Text`
+    width: 217px;
+    height: 21px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+
+    display: flex;
+    align-items: center;
+
+    color: #333638;
+`;
+
+export const ItemActive = styled.View`
+    width: 14px;
+    height: 14px;
+    background: #CBE4B4;
+    border-radius: 20px;
+`;
+
+export const ItemInactive = styled.View`
+    width: 14px;
+    height: 14px;
+    background: #F3BABD;
+    border-radius: 20px;
 `;
