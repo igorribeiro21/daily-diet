@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { ArrowUpRight } from 'phosphor-react-native';
 
 export const Container = styled.View`
     flex: 1;    
@@ -55,7 +56,10 @@ export const TextPorcentage = styled.Text`
     text-align: center;
 `;
 
-export const TextIcon = styled.Text`
+export const IconPorcentage = styled(ArrowUpRight).attrs(() => ({
+    size: 22,
+    color: '#639339',
+}))`
     position: absolute;
     width: 24px;
     height: 24px;

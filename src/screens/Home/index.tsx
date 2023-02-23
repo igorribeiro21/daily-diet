@@ -12,7 +12,7 @@ import {
     ItemActive,
     ItemInactive,
     TextTitle,
-    TextIcon
+    IconPorcentage
 } from './styles';
 
 import { Button } from '@components/Button';
@@ -151,7 +151,7 @@ export function Home() {
             />
 
             <ViewPorcentage>
-                <TextIcon>Faltando Icone aqui</TextIcon>
+                <IconPorcentage />
                 <TextPorcentage>
                     90,86%
                 </TextPorcentage>
