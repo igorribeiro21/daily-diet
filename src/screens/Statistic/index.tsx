@@ -17,7 +17,7 @@ import {
 export function Statistic() {
     return (
         <Container>
-            <Header>
+            <Header type='PRIMARY'>
                 <IconArrowLeft />
                 <TextPorcentage>90,86%</TextPorcentage>
                 <TextDiet>das refeições dentro da dieta</TextDiet>
