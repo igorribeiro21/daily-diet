@@ -1,10 +1,11 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { ArrowLeft } from 'phosphor-react-native';
 
 export type TypeStyleProps = 'PRIMARY' | 'SECONDARY';
 
 type Props = {
-    type: TypeStyleProps
+    type: TypeStyleProps,
+    isActive?: boolean;
 }
 
 export const Container = styled.View`
@@ -251,6 +252,10 @@ export const ViewCheck = styled.View`
 `;
 
 export const ButtonCheck = styled.TouchableOpacity<Props>`
+
+    ${({ type, isActive }) => isActive && css`
+    border: 1px solid ${type === 'PRIMARY' ? '#639339' : '#BF3B44'};
+    `}
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
@@ -260,15 +265,14 @@ export const ButtonCheck = styled.TouchableOpacity<Props>`
     gap: 8px;
     width: 159.5px;
     height: 50px;
-    background: ${({type}) => type === 'PRIMARY' ? '#EFF0F0' : '#F4E6E7'};
-    border: 1px solid ${({type}) => type === 'PRIMARY' ? '#639339' : '#BF3B44'};
-    border-radius: 6px;
+    background: ${({ type }) => type === 'PRIMARY' ? '#EFF0F0' : '#F4E6E7'};    
+    border-radius: 6px;    
 `;
 
 export const ViewColor = styled.View<Props>`
     width: 8px;
     height: 8px;
-    background: ${({type}) => type === 'PRIMARY' ? '#639339' : '#BF3B44'};
+    background: ${({ type }) => type === 'PRIMARY' ? '#639339' : '#BF3B44'};
 `
 export const TextColor = styled.Text`
     width: 30px;

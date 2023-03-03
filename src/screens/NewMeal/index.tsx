@@ -58,7 +58,7 @@ export function NewMeal() {
                     <ViewAreYouDiet>
                         <TextAreYouDiet>Está dentro da dieta?</TextAreYouDiet>
                         <ViewCheck>
-                            <ButtonCheck type='PRIMARY'>
+                            <ButtonCheck type='PRIMARY' isActive>
                                 <ViewColor type='PRIMARY' />
                                 <TextColor>Sim</TextColor>
                             </ButtonCheck>
