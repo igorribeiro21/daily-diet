@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components/native';
-import { ArrowLeft } from 'phosphor-react-native';
 
 export type TypeStyleProps = 'PRIMARY' | 'SECONDARY';
 
@@ -20,25 +19,6 @@ export const Header = styled.View`
     top: 0px;    
 
     background: #DDDEDF;
-`;
-
-export const Title = styled.Text` 
-    position: absolute;
-    width: 114px;
-    height: 23px;
-    left: 114px;
-    top: 57px;
-
-    font-weight: 700;
-    font-size: 18px;
-
-    line-height: 23px;
-
-    display: flex;
-    align-items: center;
-    text-align: center;
-
-    color: #1B1D1E;
 `;
 
 export const Content = styled.View` 
@@ -314,13 +294,3 @@ export const TextButton = styled.Text`
     color: #FFFFFF;
 `;
 
-export const IconArrowLeft = styled(ArrowLeft).attrs(() => ({
-    size: 22,
-    color: '#333638',
-}))`
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    left: 24px;
-    top: 56px;
-`;

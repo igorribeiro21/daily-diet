@@ -1,9 +1,6 @@
 import { TextName } from '@screens/Home/styles';
 import {
     Container,
-    Header,
-    Title,
-    IconArrowLeft,
     Content,
     Form,
     ViewName,
@@ -28,13 +25,12 @@ import {
     TextButton
 } from './styles';
 
+import { Header } from '@components/Header';
+
 export function NewMeal() {
     return (
         <Container>
-            <Header>
-                <IconArrowLeft />
-                <Title>Nova refeição</Title>
-            </Header>
+            <Header color='DEFAULT' text='Nova refeição' />
             <Content>
                 <Form>
                     <ViewName>
@@ -71,7 +67,7 @@ export function NewMeal() {
                 </Form>
 
                 <ButtonNewMeal
-                    onPress={() => {}}
+                    onPress={() => { }}
                 >
                     <TextButton>Cadastrar refeição</TextButton>
                 </ButtonNewMeal>

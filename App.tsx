@@ -3,10 +3,11 @@ import { Home } from '@screens/Home';
 import { Statistic } from '@screens/Statistic';
 import { NewMeal } from '@screens/NewMeal';
 import { Feedback } from '@screens/Feedback';
+import { Meal } from '@screens/Meal';
 
 export default function App() {
   return (
     // <Home />
-    <Feedback insideDiet={true}/>
+    <Meal insideDiet={true} />
   );
 }
