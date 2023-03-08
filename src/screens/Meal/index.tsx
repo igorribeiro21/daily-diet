@@ -1,4 +1,22 @@
-import { Container, Content } from './styles';
+import {
+    Container,
+    Content,
+    InformationsView,
+    HeaderInformation,
+    Title,
+    Detail,
+    DatetimeView,
+    TitleDatetime,
+    DetailDatetime,
+    InsideDietView,
+    ColorInsideDiet,
+    TextInside,
+    EditButton,
+    EditIconButton,
+    ExcludeButton,
+    TextButton,
+    ExcludeIconButton
+} from './styles';
 import { Header } from '@components/Header';
 
 type Props = {
@@ -8,12 +26,37 @@ type Props = {
 export function Meal({ insideDiet }: Props) {
     return (
         <Container>
-            <Header 
+            <Header
                 color={insideDiet ? 'PRIMARY' : 'SECONDARY'}
                 text='Refeição'
             />
             <Content>
-                
+                <InformationsView>
+                    <HeaderInformation>
+                        <Title>Sanduíche</Title>
+                        <Detail>Sanduíche de pão integral com atum e salada de alface e tomate</Detail>
+                    </HeaderInformation>
+
+                    <DatetimeView>
+                        <TitleDatetime>Data e hora</TitleDatetime>
+                        <DetailDatetime>12/08/2022 às 16:00</DetailDatetime>
+                    </DatetimeView>
+
+                    <InsideDietView>
+                        <ColorInsideDiet type={insideDiet ? 'PRIMARY' : 'SECONDARY'} />
+                        <TextInside>{insideDiet ? 'dentro da dieta' : 'fora da dieta'}</TextInside>
+                    </InsideDietView>
+                </InformationsView>
+
+                <EditButton>
+                    <EditIconButton />
+                    <TextButton edit>Editar refeição</TextButton>
+                </EditButton>
+
+                <ExcludeButton>
+                    <ExcludeIconButton />
+                    <TextButton edit={false}>Excluir refeição</TextButton>
+                </ExcludeButton>
             </Content>
         </Container>
     );
