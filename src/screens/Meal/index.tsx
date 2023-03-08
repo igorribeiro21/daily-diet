@@ -15,7 +15,15 @@ import {
     EditIconButton,
     ExcludeButton,
     TextButton,
-    ExcludeIconButton
+    ExcludeIconButton,
+    ExcludeView,
+    ModalExclude,
+    TitleExclude,
+    ViewButtons,
+    ButtonCancel,
+    TextButtonCancel,
+    ButtonExclude,
+    TextButtonExclude
 } from './styles';
 import { Header } from '@components/Header';
 
@@ -58,6 +66,21 @@ export function Meal({ insideDiet }: Props) {
                     <TextButton edit={false}>Excluir refeição</TextButton>
                 </ExcludeButton>
             </Content>
+
+            <ExcludeView>
+                <ModalExclude>
+                    <TitleExclude>Deseja realmente excluir o registro da refeição?</TitleExclude>
+
+                    <ViewButtons>
+                        <ButtonCancel>
+                            <TextButtonCancel>Cancelar</TextButtonCancel>
+                        </ButtonCancel>
+                        <ButtonExclude>
+                            <TextButtonExclude>Sim, excluir</TextButtonExclude>
+                        </ButtonExclude>
+                    </ViewButtons>
+                </ModalExclude>
+            </ExcludeView>
         </Container>
     );
 }

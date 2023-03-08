@@ -27,10 +27,14 @@ import {
 
 import { Header } from '@components/Header';
 
-export function NewMeal() {
+type Props = {
+    edit: boolean;
+}
+
+export function EditAndNewMeal({ edit }: Props) {
     return (
         <Container>
-            <Header color='DEFAULT' text='Nova refeição' />
+            <Header color='DEFAULT' text={edit ? 'Editar refeição' : 'Nova refeição'} />
             <Content>
                 <Form>
                     <ViewName>
@@ -69,7 +73,7 @@ export function NewMeal() {
                 <ButtonNewMeal
                     onPress={() => { }}
                 >
-                    <TextButton>Cadastrar refeição</TextButton>
+                    <TextButton>{edit ? 'Salvar alterações' : 'Cadastrar refeição'}</TextButton>
                 </ButtonNewMeal>
             </Content>
         </Container>

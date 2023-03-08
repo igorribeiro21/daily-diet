@@ -182,6 +182,107 @@ export const ExcludeButton = styled.TouchableOpacity`
     border-radius: 6px;
 `;
 
+export const ExcludeView = styled.View`
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+
+    background: rgba(0, 0, 0, 0.25);
+`;
+
+export const ModalExclude = styled.View`
+    position: absolute;
+    width: 327px;
+    height: 192px;
+    left: 15px;
+    top: 250px;
+    background: #FAFAFA;
+    border-radius: 8px;
+`;
+
+export const TitleExclude = styled.Text`
+    position: absolute;
+    width: 279px;
+    height: 46px;
+    left: 30px;
+    top: 40px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #333638;
+`;
+
+export const ViewButtons = styled.View`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    gap: 12px;
+    position: absolute;
+    width: 282px;
+    height: 50px;
+    left: 30px;
+    top: 118px;
+`;
+
+export const ButtonCancel = styled.TouchableOpacity`
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    gap: 12px;
+    width: 135px;
+    height: 50px;
+    border: 1px solid #1B1D1E;
+    border-radius: 6px;
+`;
+
+export const TextButtonCancel = styled.Text`
+    width: 57px;
+    height: 18px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #1B1D1E;
+`;
+
+export const ButtonExclude = styled.TouchableOpacity`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 24px;
+    gap: 12px;
+    width: 135px;
+    height: 50px;
+    background: #333638;
+    border-radius: 6px;
+`;
+
+export const TextButtonExclude = styled.Text`
+    width: 75px;
+    height: 18px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #FFFFFF;
+`;
+
 export const EditIconButton = styled(PencilSimpleLine).attrs(() => ({
     size: 22,
     color: '#fff'
