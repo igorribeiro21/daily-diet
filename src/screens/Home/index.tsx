@@ -21,6 +21,7 @@ import {
     Text,
     SectionList,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 import ellipse from '@assets/ellipse.png';
@@ -140,6 +141,11 @@ const data = [
 ]
 
 export function Home() {
+    const navigation = useNavigation();
+    function handleNewMeal() {
+        navigation.navigate('editAndNewMeal', { edit: false });
+    }
+
     return (
         <Container>
             <Logo
@@ -173,6 +179,7 @@ export function Home() {
 
                 <Button
                     title='+ Nova refeição'
+                    onPress={handleNewMeal}
                 />
 
                 <SectionList

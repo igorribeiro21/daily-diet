@@ -28,7 +28,7 @@ import {
 import { Header } from '@components/Header';
 
 type Props = {
-    insideDiet: boolean;
+    insideDiet?: boolean;
 };
 
 export function Meal({ insideDiet }: Props) {

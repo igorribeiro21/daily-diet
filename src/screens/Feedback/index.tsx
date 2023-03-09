@@ -15,10 +15,11 @@ import imageInsideDiet from '@assets/illustrationInsideDiet.png';
 import imageOffDiet from '@assets/illustrationOffDiet.png';
 
 type Props = {
-    insideDiet: boolean;
+    insideDiet?: boolean;
 };
 
 export function Feedback({ insideDiet }: Props) {
+    console.log('insideDiet',insideDiet)
     return (
         <Container>
             <ContentHeader>
