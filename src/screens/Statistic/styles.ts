@@ -11,14 +11,14 @@ export const Container = styled.View`
     flex: 1;
 `;
 
-export const Header = styled.View`
+export const Header = styled.View<Props>`
     position: absolute;
     height: 200px;
     left: 0px;
     right: 0px;
     top: 0px;
 
-    background: #E5F0DB;
+    background: ${({type}) => type === 'PRIMARY' ? '#E5F0DB' : '#F4E6E7'};
 `;
 
 export const TextPorcentage = styled.Text`
@@ -89,7 +89,7 @@ export const SubTitle = styled.Text`
 export const ContentView = styled.View`
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     padding: 0px;
     gap: 12px;
     
@@ -113,15 +113,16 @@ export const BestSequelView = styled.View`
 
     background: #EFF0F0;
     border-radius: 8px;
-    margin-top: 5px;
+    margin-top: 10px;
 `;
 
 export const MealsContentView = styled.View`
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     padding: 0px;
     gap: 12px;
+    margin-top: 10px;
 
     width: 327px;
     height: 107px;
@@ -134,7 +135,7 @@ export const MealsView = styled.View<Props>`
     align-items: center;
     padding: 16px;
     gap: 8px;
-
+    margin-right: 12px;
     width: 157.5px;
     height: 107px;
 
@@ -166,6 +167,7 @@ export const Text = styled.Text`
     text-align: center;
 
     color: #333638;
+    flex-grow: 0;
 `;
 
 export const IconArrowLeft = styled(ArrowLeft).attrs(() => ({
