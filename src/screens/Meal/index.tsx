@@ -27,11 +27,28 @@ import {
 } from './styles';
 import { Header } from '@components/Header';
 
-type Props = {
-    insideDiet?: boolean;
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { useState } from 'react';
+
+type RouteParams = {
+    insideDiet: boolean;
 };
 
-export function Meal({ insideDiet }: Props) {
+export function Meal() {
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { insideDiet } = route.params as RouteParams;
+
+    const [excludeModal, setExcludeModal] = useState(false);
+
+    function handleEditMeal() {
+        navigation.navigate('editAndNewMeal', { edit: true })
+    }
+
+    function handleExcludeModal() {
+        setExcludeModal(!excludeModal);
+    }
+
     return (
         <Container>
             <Header
@@ -56,31 +73,35 @@ export function Meal({ insideDiet }: Props) {
                     </InsideDietView>
                 </InformationsView>
 
-                <EditButton>
+                <EditButton onPress={handleEditMeal}>
                     <EditIconButton />
                     <TextButton edit>Editar refeição</TextButton>
                 </EditButton>
 
-                <ExcludeButton>
+                <ExcludeButton onPress={handleExcludeModal}>
                     <ExcludeIconButton />
                     <TextButton edit={false}>Excluir refeição</TextButton>
                 </ExcludeButton>
             </Content>
 
-            <ExcludeView>
-                <ModalExclude>
-                    <TitleExclude>Deseja realmente excluir o registro da refeição?</TitleExclude>
+            {
+                excludeModal && (
+                    <ExcludeView>
+                        <ModalExclude>
+                            <TitleExclude>Deseja realmente excluir o registro da refeição?</TitleExclude>
 
-                    <ViewButtons>
-                        <ButtonCancel>
-                            <TextButtonCancel>Cancelar</TextButtonCancel>
-                        </ButtonCancel>
-                        <ButtonExclude>
-                            <TextButtonExclude>Sim, excluir</TextButtonExclude>
-                        </ButtonExclude>
-                    </ViewButtons>
-                </ModalExclude>
-            </ExcludeView>
+                            <ViewButtons>
+                                <ButtonCancel onPress={handleExcludeModal}>
+                                    <TextButtonCancel>Cancelar</TextButtonCancel>
+                                </ButtonCancel>
+                                <ButtonExclude>
+                                    <TextButtonExclude>Sim, excluir</TextButtonExclude>
+                                </ButtonExclude>
+                            </ViewButtons>
+                        </ModalExclude>
+                    </ExcludeView>
+                )
+            }
         </Container>
     );
 }

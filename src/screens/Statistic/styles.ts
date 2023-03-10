@@ -170,6 +170,10 @@ export const Text = styled.Text`
     flex-grow: 0;
 `;
 
+export const ButtonBack = styled.TouchableOpacity`
+    flex: 1;
+`;
+
 export const IconArrowLeft = styled(ArrowLeft).attrs(() => ({
     size: 22,
     color: '#639339',

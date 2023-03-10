@@ -12,7 +12,8 @@ import {
     ItemActive,
     ItemInactive,
     TextTitle,
-    IconPorcentage
+    IconPorcentage,
+    ButtonPress
 } from './styles';
 
 import { Button } from '@components/Button';
@@ -20,6 +21,7 @@ import { Button } from '@components/Button';
 import {
     Text,
     SectionList,
+    TouchableOpacity
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -146,6 +148,14 @@ export function Home() {
         navigation.navigate('editAndNewMeal', { edit: false });
     }
 
+    function handleStatistic() {
+        navigation.navigate('statistic');
+    }
+
+    function handleItem(insideDiet: boolean) {
+        navigation.navigate('meal', { insideDiet })
+    }
+
     return (
         <Container>
             <Logo
@@ -156,23 +166,25 @@ export function Home() {
                 source={ellipse}
             />
 
-            <ViewPorcentage>
-                <IconPorcentage />
-                <TextPorcentage>
-                    90,86%
-                </TextPorcentage>
-                <Text
-                    style={{
-                        fontWeight: '400',
-                        fontSize: 14,
-                        display: 'flex',
-                        alignItems: 'center',
-                        textAlign: 'center'
-                    }}
-                >
-                    das refeições dentro da dieta
-                </Text>
-            </ViewPorcentage>
+            <ButtonPress onPress={handleStatistic}>
+                <ViewPorcentage>
+                    <IconPorcentage />
+                    <TextPorcentage>
+                        90,86%
+                    </TextPorcentage>
+                    <Text
+                        style={{
+                            fontWeight: '400',
+                            fontSize: 14,
+                            display: 'flex',
+                            alignItems: 'center',
+                            textAlign: 'center'
+                        }}
+                    >
+                        das refeições dentro da dieta
+                    </Text>
+                </ViewPorcentage>
+            </ButtonPress>
 
             <ViewContains>
                 <TextContains>Refeições</TextContains>
@@ -189,12 +201,14 @@ export function Home() {
                     }}
                     keyExtractor={(item, index) => item.name + index}
                     renderItem={({ item }) => (
-                        <ViewItem>
-                            <TextHour>{item.hour}</TextHour>
-                            <Text> | </Text>
-                            <TextName>{item.name}</TextName>
-                            {item.active ? <ItemActive /> : <ItemInactive />}
-                        </ViewItem>
+                        <TouchableOpacity onPress={() => handleItem(item.active)}>
+                            <ViewItem>
+                                <TextHour>{item.hour}</TextHour>
+                                <Text> | </Text>
+                                <TextName>{item.name}</TextName>
+                                {item.active ? <ItemActive /> : <ItemInactive />}
+                            </ViewItem>
+                        </TouchableOpacity>
                     )}
                     renderSectionHeader={({ section: { title } }) => (
                         <TextTitle>{String(`${title.getDate()}.${title.getMonth()}.${title.getFullYear()}`)}</TextTitle>

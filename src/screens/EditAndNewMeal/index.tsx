@@ -27,14 +27,16 @@ import {
 
 import { Header } from '@components/Header';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,useRoute } from '@react-navigation/native';
 
-type Props = {
-    edit?: boolean;
+type RouteParams = {
+    edit: boolean;
 }
 
-export function EditAndNewMeal({ edit }: Props) {
+export function EditAndNewMeal() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const { edit } = route.params as RouteParams;
 
     function handleCreateNewMeal() {
         navigation.navigate('feedback', { insideDiet: true })

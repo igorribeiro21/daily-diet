@@ -41,6 +41,10 @@ export const Text = styled.Text`
     color: #1B1D1E;
 `;
 
+export const BackButton = styled.TouchableOpacity`
+    flex: 1;
+`;
+
 export const IconArrowLeft = styled(ArrowLeft).attrs(() => ({
     size: 22,
     color: '#333638',

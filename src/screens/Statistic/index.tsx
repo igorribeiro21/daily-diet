@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import {
     Container,
     Content,
@@ -11,14 +12,22 @@ import {
     NumberQuantity,
     MealsContentView,
     MealsView,
-    Text
+    Text,
+    ButtonBack
 } from './styles';
 
 export function Statistic() {
+    const navigation = useNavigation();
+    function handleBack() {
+        navigation.goBack();
+    }
+
     return (
         <Container>
             <Header type='PRIMARY'>
-                <IconArrowLeft />
+                <ButtonBack onPress={handleBack}>
+                    <IconArrowLeft />
+                </ButtonBack>
                 <TextPorcentage>90,86%</TextPorcentage>
                 <TextDiet>das refeições dentro da dieta</TextDiet>
             </Header>

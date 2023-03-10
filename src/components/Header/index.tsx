@@ -1,10 +1,9 @@
-import { ColorsBackground, Container, IconArrowLeft, Text } from './styles'
+import { BackButton, ColorsBackground, Container, IconArrowLeft, Text } from './styles'
 
 type Props = {
     color: ColorsBackground,
     text: string;
 };
-import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export function Header({ color, text }: Props) {
@@ -14,9 +13,9 @@ export function Header({ color, text }: Props) {
     }
     return (
         <Container color={color}>
-            <TouchableOpacity onPress={handleGoBack}>
+            <BackButton onPress={handleGoBack}>
                 <IconArrowLeft />
-            </TouchableOpacity>
+            </BackButton>
             <Text>{text}</Text>
         </Container>
     );
