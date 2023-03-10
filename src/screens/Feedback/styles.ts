@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native';
 
 type Props = {
-    insideDiet: boolean;
+    insideDiet?: boolean;
 };
 
 export const Container = styled.View`

@@ -27,11 +27,21 @@ import {
 
 import { Header } from '@components/Header';
 
-type Props = {
+import { useNavigation,useRoute } from '@react-navigation/native';
+
+type RouteParams = {
     edit: boolean;
 }
 
-export function EditAndNewMeal({ edit }: Props) {
+export function EditAndNewMeal() {
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { edit } = route.params as RouteParams;
+
+    function handleCreateNewMeal() {
+        navigation.navigate('feedback', { insideDiet: true })
+    }
+
     return (
         <Container>
             <Header color='DEFAULT' text={edit ? 'Editar refeição' : 'Nova refeição'} />
@@ -71,7 +81,7 @@ export function EditAndNewMeal({ edit }: Props) {
                 </Form>
 
                 <ButtonNewMeal
-                    onPress={() => { }}
+                    onPress={handleCreateNewMeal}
                 >
                     <TextButton>{edit ? 'Salvar alterações' : 'Cadastrar refeição'}</TextButton>
                 </ButtonNewMeal>

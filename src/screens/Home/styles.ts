@@ -25,6 +25,10 @@ export const Logo = styled.Image`
     top: 66px;
 `;
 
+export const ButtonPress = styled.TouchableOpacity`
+    flex: 1;
+`;
+
 export const ViewPorcentage = styled.View`
     display: flex;
     flex-direction: column;

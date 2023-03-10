@@ -10,15 +10,24 @@ import {
 import {
     Text
 } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import imageInsideDiet from '@assets/illustrationInsideDiet.png';
 import imageOffDiet from '@assets/illustrationOffDiet.png';
 
-type Props = {
+type RouteParams = {
     insideDiet: boolean;
 };
 
-export function Feedback({ insideDiet }: Props) {
+export function Feedback() {
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { insideDiet } = route.params as RouteParams;
+
+    function handleHome() {
+        navigation.navigate('home');
+    }
+
     return (
         <Container>
             <ContentHeader>
@@ -35,7 +44,7 @@ export function Feedback({ insideDiet }: Props) {
             />
 
             <Button
-                onPress={() => {}}
+                onPress={handleHome}
             >
                 <TextButton>Ir para a página inicial</TextButton>
             </Button>
