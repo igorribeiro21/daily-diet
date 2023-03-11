@@ -13,17 +13,22 @@ import {
     ItemInactive,
     TextTitle,
     IconPorcentage,
-    ButtonPress
+    ButtonPress,
+    ContainerListEmpty,
+    TextListEmpty
 } from './styles';
 
 import { Button } from '@components/Button';
+import { Section } from '@storage/storageConfig';
 
+import { useEffect, useState } from 'react';
 import {
     Text,
     SectionList,
     TouchableOpacity
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { getAll } from '@storage/getAll';
 
 
 import ellipse from '@assets/ellipse.png';
@@ -144,6 +149,17 @@ const data = [
 
 export function Home() {
     const navigation = useNavigation();
+    const [sectionData, setSectionData] = useState<Section[]>([])
+
+    useEffect(() => {
+        getAllStorage();
+    }, []);
+
+    async function getAllStorage() {
+        const dataStorage = await getAll();
+        setSectionData(dataStorage);
+    }
+
     function handleNewMeal() {
         navigation.navigate('editAndNewMeal', { edit: false });
     }
@@ -195,7 +211,7 @@ export function Home() {
                 />
 
                 <SectionList
-                    sections={data}
+                    sections={sectionData}
                     style={{
                         marginTop: 30
                     }}
@@ -212,6 +228,13 @@ export function Home() {
                     )}
                     renderSectionHeader={({ section: { title } }) => (
                         <TextTitle>{String(`${title.getDate()}.${title.getMonth()}.${title.getFullYear()}`)}</TextTitle>
+                    )}
+                    ListEmptyComponent={() => (
+                        <ContainerListEmpty>
+                            <TextListEmpty>
+                                Cadastre sua primeira refeição.
+                            </TextListEmpty>
+                        </ContainerListEmpty>
                     )}
                     contentContainerStyle={{
                         paddingBottom: 200
