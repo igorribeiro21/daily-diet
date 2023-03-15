@@ -27,6 +27,8 @@ import {
     SectionList,
     TouchableOpacity
 } from 'react-native';
+import moment from 'moment';
+
 import { useNavigation } from '@react-navigation/native';
 import { getAll } from '@storage/getAll';
 
@@ -150,7 +152,7 @@ const data = [
 export function Home() {
     const navigation = useNavigation();
     const [sectionData, setSectionData] = useState<Section[]>([])
-
+    
     useEffect(() => {
         getAllStorage();
     }, []);
@@ -219,7 +221,7 @@ export function Home() {
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => handleItem(item.active)}>
                             <ViewItem>
-                                <TextHour>{item.hour}</TextHour>
+                                <TextHour>{moment(item.date).format("HH:mm")}</TextHour>
                                 <Text> | </Text>
                                 <TextName>{item.name}</TextName>
                                 {item.active ? <ItemActive /> : <ItemInactive />}
@@ -227,7 +229,7 @@ export function Home() {
                         </TouchableOpacity>
                     )}
                     renderSectionHeader={({ section: { title } }) => (
-                        <TextTitle>{String(`${title.getDate()}.${title.getMonth()}.${title.getFullYear()}`)}</TextTitle>
+                        <TextTitle>{moment(title).format('DD.MM.YY')}</TextTitle>
                     )}
                     ListEmptyComponent={() => (
                         <ContainerListEmpty>

@@ -266,16 +266,25 @@ export const TextColor = styled.Text`
     color: #1B1D1E;
 `;
 
+export const KeyboardView = styled.KeyboardAvoidingView`
+    position: absolute;
+    height: 50px;
+    left: 24px;
+    right: 24px;
+    bottom: 40px;
+`;
+
 export const ButtonNewMeal = styled.TouchableOpacity`
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 16px 24px;
-    gap: 12px;    
-    position: absolute;
+    gap: 12px;  
+    width: 330px;
+    top: 550px;
     height: 50px;
-    left: 24px;
+    left: 12px;
     right: 24px;
     bottom: 40px;
     background: #333638;

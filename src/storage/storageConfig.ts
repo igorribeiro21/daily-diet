@@ -1,7 +1,8 @@
 export type Items = {
     name: string;
     active: boolean;
-    hour: string;
+    date: Date;
+    description: string;
 }
 
 type Item = Items;
