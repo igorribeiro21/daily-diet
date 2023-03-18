@@ -1,11 +1,6 @@
-export type Items = {
-    name: string;
-    active: boolean;
-    date: Date;
-    description: string;
-}
+import { mealDTO } from "./mealDTO";
 
-type Item = Items;
+type Item = mealDTO;
 
 export interface Section {
   title: Date;

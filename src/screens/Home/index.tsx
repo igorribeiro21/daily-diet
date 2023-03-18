@@ -21,7 +21,7 @@ import {
 import { Button } from '@components/Button';
 import { Section } from '@storage/storageConfig';
 
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
 import {
     Text,
     SectionList,
@@ -29,12 +29,13 @@ import {
 } from 'react-native';
 import moment from 'moment';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { getAll } from '@storage/getAll';
 
 
 import ellipse from '@assets/ellipse.png';
 import logo from '@assets/logo.png';
+import { mealDTO } from '@storage/mealDTO';
 
 const data = [
     {
@@ -151,11 +152,7 @@ const data = [
 
 export function Home() {
     const navigation = useNavigation();
-    const [sectionData, setSectionData] = useState<Section[]>([])
-    
-    useEffect(() => {
-        getAllStorage();
-    }, []);
+    const [sectionData, setSectionData] = useState<Section[]>([])    
 
     async function getAllStorage() {
         const dataStorage = await getAll();
@@ -170,9 +167,13 @@ export function Home() {
         navigation.navigate('statistic');
     }
 
-    function handleItem(insideDiet: boolean) {
-        navigation.navigate('meal', { insideDiet })
+    function handleItem(item: mealDTO) {
+        navigation.navigate('meal', {  meal: item })
     }
+
+    useFocusEffect(useCallback(() => {
+        getAllStorage();
+    },[]));
 
     return (
         <Container>
@@ -219,12 +220,12 @@ export function Home() {
                     }}
                     keyExtractor={(item, index) => item.name + index}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => handleItem(item.active)}>
+                        <TouchableOpacity onPress={() => handleItem(item)}>
                             <ViewItem>
                                 <TextHour>{moment(item.date).format("HH:mm")}</TextHour>
                                 <Text> | </Text>
                                 <TextName>{item.name}</TextName>
-                                {item.active ? <ItemActive /> : <ItemInactive />}
+                                {item.insideDiet ? <ItemActive /> : <ItemInactive />}
                             </ViewItem>
                         </TouchableOpacity>
                     )}

@@ -29,20 +29,22 @@ import { Header } from '@components/Header';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
+import { mealDTO } from '@storage/mealDTO';
+import moment from 'moment';
 
 type RouteParams = {
-    insideDiet: boolean;
+    meal: mealDTO;
 };
 
 export function Meal() {
     const navigation = useNavigation();
     const route = useRoute();
-    const { insideDiet } = route.params as RouteParams;
+    const { meal } = route.params as RouteParams;
 
     const [excludeModal, setExcludeModal] = useState(false);
 
     function handleEditMeal() {
-        navigation.navigate('editAndNewMeal', { edit: true })
+        navigation.navigate('editAndNewMeal', { edit: true, meal })
     }
 
     function handleExcludeModal() {
@@ -52,24 +54,24 @@ export function Meal() {
     return (
         <Container>
             <Header
-                color={insideDiet ? 'PRIMARY' : 'SECONDARY'}
+                color={meal.insideDiet ? 'PRIMARY' : 'SECONDARY'}
                 text='Refeição'
             />
             <Content>
                 <InformationsView>
                     <HeaderInformation>
-                        <Title>Sanduíche</Title>
-                        <Detail>Sanduíche de pão integral com atum e salada de alface e tomate</Detail>
+                        <Title>{meal.name ? meal.name: ''}</Title>
+                        <Detail>{meal.description ? meal.description : ''}</Detail>
                     </HeaderInformation>
 
                     <DatetimeView>
                         <TitleDatetime>Data e hora</TitleDatetime>
-                        <DetailDatetime>12/08/2022 às 16:00</DetailDatetime>
+                        <DetailDatetime>{`${moment(meal.date).format('DD/MM/YYYY')} às ${moment(meal.date).format('HH:mm')}`}</DetailDatetime>
                     </DatetimeView>
 
                     <InsideDietView>
-                        <ColorInsideDiet type={insideDiet ? 'PRIMARY' : 'SECONDARY'} />
-                        <TextInside>{insideDiet ? 'dentro da dieta' : 'fora da dieta'}</TextInside>
+                        <ColorInsideDiet type={meal.insideDiet ? 'PRIMARY' : 'SECONDARY'} />
+                        <TextInside>{meal.insideDiet ? 'dentro da dieta' : 'fora da dieta'}</TextInside>
                     </InsideDietView>
                 </InformationsView>
 

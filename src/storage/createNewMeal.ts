@@ -1,5 +1,5 @@
 import { getAll } from './getAll';
-import { Section, MEAL_COLLECTION, Items } from './storageConfig';
+import { Section, MEAL_COLLECTION } from './storageConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { mealDTO } from './mealDTO';
 import moment from 'moment';
@@ -27,7 +27,7 @@ export async function createNewMeal(dados: mealDTO) {
             });
             
             findDate.data.push({
-                active: dados.insideDiet,
+                insideDiet: dados.insideDiet,
                 name: dados.name,
                 date: dados.date,
                 description: dados.description
@@ -50,9 +50,9 @@ export async function createNewMeal(dados: mealDTO) {
                  findAll.splice(findIndex, 1);
                  findAll.push(findDate); 
         } else {
-            const items: Items[] = [];
+            const items: mealDTO[] = [];
             items.push({
-                active: dados.insideDiet,
+                insideDiet: dados.insideDiet,
                 name: dados.name,
                 date: dados.date,
                 description: dados.description

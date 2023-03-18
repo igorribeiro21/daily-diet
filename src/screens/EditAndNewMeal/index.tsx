@@ -29,7 +29,7 @@ import { Header } from '@components/Header';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TouchableOpacity, Alert } from 'react-native';
 import moment from 'moment';
 import { mealDTO } from '@storage/mealDTO';
@@ -37,12 +37,13 @@ import { createNewMeal } from '@storage/createNewMeal';
 
 type RouteParams = {
     edit: boolean;
+    meal?: mealDTO
 }
 
 export function EditAndNewMeal() {
     const navigation = useNavigation();
     const route = useRoute();
-    const { edit } = route.params as RouteParams;
+    const { edit, meal } = route.params as RouteParams;
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -55,17 +56,17 @@ export function EditAndNewMeal() {
 
     const onChangeDatePicker = (event: DateTimePickerEvent, newDate?: Date) => {
         let dateNow = new Date();
-        let dateHour = new Date(newDate?.getFullYear() || dateNow.getFullYear(),newDate?.getMonth() || dateNow.getMonth(),newDate?.getDate(),hour?.getHours(),hour?.getMinutes());
-        
+        let dateHour = new Date(newDate?.getFullYear() || dateNow.getFullYear(), newDate?.getMonth() || dateNow.getMonth(), newDate?.getDate(), hour?.getHours(), hour?.getMinutes());
+
         setShowDatePicker(false);
         setDate(dateHour || new Date);
     };
 
     const onChangeHourPicker = (event: DateTimePickerEvent, hour?: Date) => {
         setShowHourPicker(false);
-        let dateHour = new Date(date.getFullYear(),date.getMonth(),date.getDate(),hour?.getHours(),hour?.getMinutes());        
+        let dateHour = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour?.getHours(), hour?.getMinutes());
         setDate(dateHour);
-        setHour(dateHour || new Date());        
+        setHour(dateHour || new Date());
     };
 
     const showDatepicker = () => {
@@ -105,8 +106,9 @@ export function EditAndNewMeal() {
                 name,
                 insideDiet
             };
-            
-            await createNewMeal(obj);     
+
+            await createNewMeal(obj);
+            navigation.navigate('feedback', { insideDiet });
         } catch (error) {
             console.log(error);
             Alert.alert('Erro', 'Não foi possível inserir a refeição');
@@ -116,6 +118,21 @@ export function EditAndNewMeal() {
     function renderAlert(text: string) {
         Alert.alert('Atenção!', text);
     }
+
+    
+    useEffect(() => {
+        if (edit) {
+            if (meal) {
+                setName(meal.name);
+                setDescription(meal.description);
+                setDate(new Date(Date.parse(meal.date.toString())));
+                if (meal.insideDiet)
+                    setActiveInside(true);
+                else
+                    setActiveNoInside(true);
+            }
+        }
+    }, []);
 
     return (
         <Container>
