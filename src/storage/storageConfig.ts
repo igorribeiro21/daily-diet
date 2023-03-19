@@ -1,4 +1,4 @@
-import { mealDTO } from "./mealDTO";
+import { mealDTO } from "./meal/mealDTO";
 
 type Item = mealDTO;
 
@@ -8,4 +8,5 @@ export interface Section {
 }
 
 export const MEAL_COLLECTION = '@daily-diet:meal';
+export const STATISTIC_COLLECTION = '@daily-diet:statistic';
 

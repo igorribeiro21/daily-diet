@@ -29,7 +29,7 @@ import { Header } from '@components/Header';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
-import { mealDTO } from '@storage/mealDTO';
+import { mealDTO } from '@storage/meal/mealDTO';
 import moment from 'moment';
 
 type RouteParams = {

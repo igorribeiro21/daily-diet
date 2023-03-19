@@ -1,12 +1,11 @@
 import { getAll } from './getAll';
-import { Section, MEAL_COLLECTION } from './storageConfig';
+import { Section, MEAL_COLLECTION } from '../storageConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { mealDTO } from './mealDTO';
 import moment from 'moment';
 
 export async function createNewMeal(dados: mealDTO) {
-    try {
-        //await AsyncStorage.setItem(MEAL_COLLECTION,JSON.stringify([]));
+    try {        
         let findAll = await getAll();
         
         const findDate = findAll.find(x => {
@@ -79,6 +78,7 @@ export async function createNewMeal(dados: mealDTO) {
         });
         
         await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(findAll));
+        //await AsyncStorage.setItem(MEAL_COLLECTION,JSON.stringify([]));
     } catch (error) {
         throw error;
     }

@@ -1,4 +1,4 @@
-import { mealDTO } from "@storage/mealDTO";
+import { mealDTO } from "@storage/meal/mealDTO";
 
 export declare global {
     namespace ReactNavigation {

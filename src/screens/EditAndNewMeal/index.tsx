@@ -32,8 +32,11 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useState, useEffect } from 'react';
 import { TouchableOpacity, Alert } from 'react-native';
 import moment from 'moment';
-import { mealDTO } from '@storage/mealDTO';
-import { createNewMeal } from '@storage/createNewMeal';
+import { mealDTO } from '@storage/meal/mealDTO';
+import { createNewMeal } from '@storage/meal/createNewMeal';
+import { getAll } from '@storage/statistic/getAll';
+import { statisticDTO } from '@storage/statistic/statisticDTO';
+import { update } from '@storage/statistic/update';
 
 type RouteParams = {
     edit: boolean;
@@ -108,6 +111,7 @@ export function EditAndNewMeal() {
             };
 
             await createNewMeal(obj);
+            await statistic();
             navigation.navigate('feedback', { insideDiet });
         } catch (error) {
             console.log(error);
@@ -119,7 +123,38 @@ export function EditAndNewMeal() {
         Alert.alert('Atenção!', text);
     }
 
-    
+    async function statistic() {
+        try {
+            let insideDiet = false;
+
+            if (activeInside)
+                insideDiet = true;
+            else if (activeNoInside)
+                insideDiet = false;
+
+            const storage = await getAll();            
+
+            const newStatistic: statisticDTO = {
+                porcentage: storage.porcentage,
+                sequence: insideDiet ? (storage.sequence + 1) : 0,
+                total: (storage.total + 1),
+                mealInside: insideDiet ? (storage.mealInside + 1) : storage.mealInside,
+                mealNotInside: !insideDiet ? (storage.mealNotInside + 1) : storage.mealNotInside
+            };
+
+            Object.assign(newStatistic, {
+                ...newStatistic,
+                porcentage: Number(Number((newStatistic.mealInside / newStatistic.total) * 100).toFixed(2))
+            });
+
+            await update(newStatistic);
+        } catch (error) {
+            Alert.alert('Erro', `Ocorreu um erro ao atualizar as estatísticas : ${error}`);
+        }
+
+    }
+
+
     useEffect(() => {
         if (edit) {
             if (meal) {

@@ -30,12 +30,12 @@ import {
 import moment from 'moment';
 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { getAll } from '@storage/getAll';
+import { getAll } from '@storage/meal/getAll';
 
 
 import ellipse from '@assets/ellipse.png';
 import logo from '@assets/logo.png';
-import { mealDTO } from '@storage/mealDTO';
+import { mealDTO } from '@storage/meal/mealDTO';
 
 const data = [
     {
