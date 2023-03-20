@@ -31,11 +31,13 @@ import moment from 'moment';
 
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { getAll } from '@storage/meal/getAll';
+import { getAll as getAllStatistic } from '@storage/statistic/getAll';
 
 
 import ellipse from '@assets/ellipse.png';
 import logo from '@assets/logo.png';
 import { mealDTO } from '@storage/meal/mealDTO';
+import { statisticDTO } from '@storage/statistic/statisticDTO';
 
 const data = [
     {
@@ -152,11 +154,19 @@ const data = [
 
 export function Home() {
     const navigation = useNavigation();
-    const [sectionData, setSectionData] = useState<Section[]>([])    
+    const [sectionData, setSectionData] = useState<Section[]>([]);
+    const [statistic, setStatistic] = useState<statisticDTO>();    
 
     async function getAllStorage() {
         const dataStorage = await getAll();
         setSectionData(dataStorage);
+    }
+
+    async function getStatistic() {
+        const storage = await getAllStatistic();
+
+        if(storage)
+            setStatistic(storage);
     }
 
     function handleNewMeal() {
@@ -173,6 +183,7 @@ export function Home() {
 
     useFocusEffect(useCallback(() => {
         getAllStorage();
+        getStatistic();
     },[]));
 
     return (
@@ -189,7 +200,7 @@ export function Home() {
                 <ViewPorcentage>
                     <IconPorcentage />
                     <TextPorcentage>
-                        90,86%
+                        {statistic ? statistic.porcentage.toFixed(2).replace('.',',') : '0,00'}%
                     </TextPorcentage>
                     <Text
                         style={{

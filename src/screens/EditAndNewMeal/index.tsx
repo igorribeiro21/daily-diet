@@ -37,6 +37,7 @@ import { createNewMeal } from '@storage/meal/createNewMeal';
 import { getAll } from '@storage/statistic/getAll';
 import { statisticDTO } from '@storage/statistic/statisticDTO';
 import { update } from '@storage/statistic/update';
+import { updateMeal } from '@storage/meal/updateMeal';
 
 type RouteParams = {
     edit: boolean;
@@ -56,6 +57,7 @@ export function EditAndNewMeal() {
     const [showHourPicker, setShowHourPicker] = useState(false);
     const [activeInside, setActiveInside] = useState(false);
     const [activeNoInside, setActiveNoInside] = useState(false);
+    const [oldMeal, setOldMeal] = useState<mealDTO>();
 
     const onChangeDatePicker = (event: DateTimePickerEvent, newDate?: Date) => {
         let dateNow = new Date();
@@ -110,7 +112,11 @@ export function EditAndNewMeal() {
                 insideDiet
             };
 
-            await createNewMeal(obj);
+            if (edit) {
+                await updateMeal(obj,oldMeal);
+            } else {
+                await createNewMeal(obj);
+            }
             await statistic();
             navigation.navigate('feedback', { insideDiet });
         } catch (error) {
@@ -132,7 +138,7 @@ export function EditAndNewMeal() {
             else if (activeNoInside)
                 insideDiet = false;
 
-            const storage = await getAll();            
+            const storage = await getAll();
 
             const newStatistic: statisticDTO = {
                 porcentage: storage.porcentage,
@@ -158,6 +164,7 @@ export function EditAndNewMeal() {
     useEffect(() => {
         if (edit) {
             if (meal) {
+                setOldMeal(meal);
                 setName(meal.name);
                 setDescription(meal.description);
                 setDate(new Date(Date.parse(meal.date.toString())));

@@ -41,11 +41,12 @@ export function Statistic() {
 
     return (
         <Container>
+
             <Header type='PRIMARY'>
                 <ButtonBack onPress={handleBack}>
                     <IconArrowLeft />
                 </ButtonBack>
-                <TextPorcentage>{statistic?.porcentage ? `${statistic.porcentage}%` : '0.00%'}</TextPorcentage>
+                <TextPorcentage>{statistic?.porcentage ? `${statistic.porcentage.toFixed(2).replace('.',',')}%` : '0.00%'}</TextPorcentage>
                 <TextDiet>das refeições dentro da dieta</TextDiet>
             </Header>
             <Content>
