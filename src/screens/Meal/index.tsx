@@ -29,8 +29,10 @@ import { Header } from '@components/Header';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
+import { Alert } from 'react-native';
 import { mealDTO } from '@storage/meal/mealDTO';
 import moment from 'moment';
+import { deleteMeal } from '@storage/meal/deleteMeal';
 
 type RouteParams = {
     meal: mealDTO;
@@ -51,6 +53,15 @@ export function Meal() {
         setExcludeModal(!excludeModal);
     }
 
+    async function excludeMeal() {
+        try {
+            await deleteMeal(meal);
+            navigation.navigate('home');
+        } catch (error) {
+            Alert.alert('Atenção',`Ocorreu um erro excluir a refeição: ${error}`);
+        }
+    }
+
     return (
         <Container>
             <Header
@@ -60,7 +71,7 @@ export function Meal() {
             <Content>
                 <InformationsView>
                     <HeaderInformation>
-                        <Title>{meal.name ? meal.name: ''}</Title>
+                        <Title>{meal.name ? meal.name : ''}</Title>
                         <Detail>{meal.description ? meal.description : ''}</Detail>
                     </HeaderInformation>
 
@@ -96,7 +107,7 @@ export function Meal() {
                                 <ButtonCancel onPress={handleExcludeModal}>
                                     <TextButtonCancel>Cancelar</TextButtonCancel>
                                 </ButtonCancel>
-                                <ButtonExclude>
+                                <ButtonExclude onPress={excludeMeal}>
                                     <TextButtonExclude>Sim, excluir</TextButtonExclude>
                                 </ButtonExclude>
                             </ViewButtons>

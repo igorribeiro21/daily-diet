@@ -5,7 +5,6 @@ import { getAll } from './getAll';
 import { mealDTO } from './mealDTO';
 
 export async function deleteMeal(meal: mealDTO) {
-    console.log('deleteMeal');
     let findAll = await getAll();
 
     const findDate = findAll.find(x => {
@@ -15,7 +14,7 @@ export async function deleteMeal(meal: mealDTO) {
         if (dataA === dataB)
             return x;
     });
-    console.log('findDate',findDate)
+    
     if (findDate) {
         const findIndex = findAll.findIndex(x => {
             let dataA = moment(x.title).format('YYYY-MM-DD');
@@ -24,7 +23,7 @@ export async function deleteMeal(meal: mealDTO) {
             if (dataA === dataB)
                 return x;
         });
-        console.log('findIndex',findIndex)
+        
         if (findIndex) {
             const findIndexMeal = findDate.data.findIndex(x =>
                 x.date === meal.date &&
@@ -32,17 +31,15 @@ export async function deleteMeal(meal: mealDTO) {
                 x.insideDiet === meal.insideDiet &&
                 x.name === meal.name
             );
-            console.log('findIndexMeal',findIndexMeal)
+            
             if(findIndexMeal != -1) {
                 findDate.data.splice(findIndexMeal,1);
-                console.log('splice findDate',findDate)
             }
 
             findAll.splice(findIndex, 1);
-            console.log('splice findAll',findAll)
+            
             if(findDate.data.length > 0) {
                 findAll.push(findDate); 
-                console.log('push findAll',findAll)
             }
 
             await AsyncStorage.setItem(MEAL_COLLECTION, JSON.stringify(findAll));

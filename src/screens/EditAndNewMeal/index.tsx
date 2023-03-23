@@ -57,6 +57,7 @@ export function EditAndNewMeal() {
     const [showHourPicker, setShowHourPicker] = useState(false);
     const [activeInside, setActiveInside] = useState(false);
     const [activeNoInside, setActiveNoInside] = useState(false);
+    const [oldActiveInside, setOldActiveInside] = useState(false);
     const [oldMeal, setOldMeal] = useState<mealDTO>();
 
     const onChangeDatePicker = (event: DateTimePickerEvent, newDate?: Date) => {
@@ -113,7 +114,7 @@ export function EditAndNewMeal() {
             };
 
             if (edit) {
-                await updateMeal(obj,oldMeal);
+                await updateMeal(obj, oldMeal);
             } else {
                 await createNewMeal(obj);
             }
@@ -138,15 +139,31 @@ export function EditAndNewMeal() {
             else if (activeNoInside)
                 insideDiet = false;
 
+            const updateInside = insideDiet !== oldActiveInside;
+            
             const storage = await getAll();
 
             const newStatistic: statisticDTO = {
                 porcentage: storage.porcentage,
-                sequence: insideDiet ? (storage.sequence + 1) : 0,
-                total: (storage.total + 1),
-                mealInside: insideDiet ? (storage.mealInside + 1) : storage.mealInside,
-                mealNotInside: !insideDiet ? (storage.mealNotInside + 1) : storage.mealNotInside
+                sequence: insideDiet && !edit ? (storage.sequence + 1) : edit ? storage.sequence : 0,
+                total: edit ? storage.total : (storage.total + 1),
+                mealInside: storage.mealInside,
+                mealNotInside: storage.mealNotInside
             };
+
+            if (insideDiet && (!edit || (edit && updateInside))) {
+                Object.assign(newStatistic, {
+                    ...newStatistic,
+                    mealInside: (storage.mealInside + 1),
+                    mealNotInside: edit ? (storage.mealNotInside - 1) : storage.mealNotInside
+                });
+            } else if (!insideDiet && (!edit || (edit && updateInside))) {
+                Object.assign(newStatistic, {
+                    ...newStatistic,
+                    mealInside: edit ? (storage.mealInside - 1) : storage.mealInside,
+                    mealNotInside: (storage.mealNotInside + 1)
+                });
+            }
 
             Object.assign(newStatistic, {
                 ...newStatistic,
@@ -163,15 +180,23 @@ export function EditAndNewMeal() {
 
     useEffect(() => {
         if (edit) {
-            if (meal) {
+            if (meal) {                
+                const dateComplete = new Date(Date.parse(meal.date.toString()));
                 setOldMeal(meal);
                 setName(meal.name);
                 setDescription(meal.description);
-                setDate(new Date(Date.parse(meal.date.toString())));
-                if (meal.insideDiet)
+                setDate(dateComplete);
+                setHour(dateComplete);
+                
+                if (meal.insideDiet) {
                     setActiveInside(true);
-                else
+                    setOldActiveInside(true);
+                }
+                else {
                     setActiveNoInside(true);
+                    setOldActiveInside(false);
+                }
+
             }
         }
     }, []);
