@@ -24,7 +24,7 @@ export async function deleteMeal(meal: mealDTO) {
                 return x;
         });
         
-        if (findIndex) {
+        if (findIndex != -1) {
             const findIndexMeal = findDate.data.findIndex(x =>
                 x.date === meal.date &&
                 x.description === meal.description &&

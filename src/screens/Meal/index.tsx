@@ -33,6 +33,9 @@ import { Alert } from 'react-native';
 import { mealDTO } from '@storage/meal/mealDTO';
 import moment from 'moment';
 import { deleteMeal } from '@storage/meal/deleteMeal';
+import { statisticDTO } from '@storage/statistic/statisticDTO';
+import { getAll } from '@storage/statistic/getAll';
+import { update } from '@storage/statistic/update';
 
 type RouteParams = {
     meal: mealDTO;
@@ -56,9 +59,32 @@ export function Meal() {
     async function excludeMeal() {
         try {
             await deleteMeal(meal);
+            await statistic();
             navigation.navigate('home');
         } catch (error) {
             Alert.alert('Atenção',`Ocorreu um erro excluir a refeição: ${error}`);
+        }
+    }
+
+    async function statistic() {
+        const storage = await getAll();
+        const insideDiet = meal.insideDiet;
+
+        if(storage) {
+            const newStatistic: statisticDTO = {
+                porcentage: storage.porcentage,
+                sequence: storage.sequence,
+                total: (storage.total - 1),
+                mealInside: insideDiet ? (storage.mealInside - 1) : storage.mealInside,
+                mealNotInside: !insideDiet ? (storage.mealNotInside - 1) : storage.mealNotInside
+            };
+
+            Object.assign(newStatistic, {
+                ...newStatistic,
+                porcentage: Number(Number((newStatistic.mealInside / newStatistic.total) * 100).toFixed(2))
+            });
+
+            await update(newStatistic);
         }
     }
 
