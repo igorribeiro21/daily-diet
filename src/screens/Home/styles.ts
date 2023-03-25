@@ -5,6 +5,19 @@ export const Container = styled.View`
     flex: 1;    
 `;
 
+export const ContainerListEmpty = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const TextListEmpty = styled.Text`
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 12px;
+`
+
 export const ImageUser = styled.Image`
     box-sizing: absolute;
     position: absolute;
@@ -12,7 +25,6 @@ export const ImageUser = styled.Image`
     height: 40px;
     right: 24px;
     top: 64px;
-    //background: url(ellipse);
     border: 2px solid #333638;
     border-radius: 20px;
 `;

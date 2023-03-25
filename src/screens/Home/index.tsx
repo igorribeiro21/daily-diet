@@ -13,21 +13,31 @@ import {
     ItemInactive,
     TextTitle,
     IconPorcentage,
-    ButtonPress
+    ButtonPress,
+    ContainerListEmpty,
+    TextListEmpty
 } from './styles';
 
 import { Button } from '@components/Button';
+import { Section } from '@storage/storageConfig';
 
+import { useState, useCallback } from 'react';
 import {
     Text,
     SectionList,
     TouchableOpacity
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import moment from 'moment';
+
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { getAll } from '@storage/meal/getAll';
+import { getAll as getAllStatistic } from '@storage/statistic/getAll';
 
 
 import ellipse from '@assets/ellipse.png';
 import logo from '@assets/logo.png';
+import { mealDTO } from '@storage/meal/mealDTO';
+import { statisticDTO } from '@storage/statistic/statisticDTO';
 
 const data = [
     {
@@ -144,6 +154,21 @@ const data = [
 
 export function Home() {
     const navigation = useNavigation();
+    const [sectionData, setSectionData] = useState<Section[]>([]);
+    const [statistic, setStatistic] = useState<statisticDTO>();    
+
+    async function getAllStorage() {
+        const dataStorage = await getAll();
+        setSectionData(dataStorage);
+    }
+
+    async function getStatistic() {
+        const storage = await getAllStatistic();
+
+        if(storage)
+            setStatistic(storage);
+    }
+
     function handleNewMeal() {
         navigation.navigate('editAndNewMeal', { edit: false });
     }
@@ -152,9 +177,14 @@ export function Home() {
         navigation.navigate('statistic');
     }
 
-    function handleItem(insideDiet: boolean) {
-        navigation.navigate('meal', { insideDiet })
+    function handleItem(item: mealDTO) {
+        navigation.navigate('meal', {  meal: item })
     }
+
+    useFocusEffect(useCallback(() => {
+        getAllStorage();
+        getStatistic();
+    },[]));
 
     return (
         <Container>
@@ -170,7 +200,7 @@ export function Home() {
                 <ViewPorcentage>
                     <IconPorcentage />
                     <TextPorcentage>
-                        90,86%
+                        {statistic ? statistic.porcentage.toFixed(2).replace('.',',') : '0,00'}%
                     </TextPorcentage>
                     <Text
                         style={{
@@ -195,23 +225,30 @@ export function Home() {
                 />
 
                 <SectionList
-                    sections={data}
+                    sections={sectionData}
                     style={{
                         marginTop: 30
                     }}
                     keyExtractor={(item, index) => item.name + index}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => handleItem(item.active)}>
+                        <TouchableOpacity onPress={() => handleItem(item)}>
                             <ViewItem>
-                                <TextHour>{item.hour}</TextHour>
+                                <TextHour>{moment(item.date).format("HH:mm")}</TextHour>
                                 <Text> | </Text>
                                 <TextName>{item.name}</TextName>
-                                {item.active ? <ItemActive /> : <ItemInactive />}
+                                {item.insideDiet ? <ItemActive /> : <ItemInactive />}
                             </ViewItem>
                         </TouchableOpacity>
                     )}
                     renderSectionHeader={({ section: { title } }) => (
-                        <TextTitle>{String(`${title.getDate()}.${title.getMonth()}.${title.getFullYear()}`)}</TextTitle>
+                        <TextTitle>{moment(title).format('DD.MM.YY')}</TextTitle>
+                    )}
+                    ListEmptyComponent={() => (
+                        <ContainerListEmpty>
+                            <TextListEmpty>
+                                Cadastre sua primeira refeição.
+                            </TextListEmpty>
+                        </ContainerListEmpty>
                     )}
                     contentContainerStyle={{
                         paddingBottom: 200
